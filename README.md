@@ -185,7 +185,15 @@ On another terminal (for better output readability) run the client:
 ```
 
 ## Try to dump the client
+Create a directory for images (`img-dir/` below) and dump the client
+```
+# crtools dump --tree <tcp-howto-client-pid> --images-dir img-dir/ -v 4 -o dump.log --shell-job --tcp-established
+```
+The state of the process(es) is saved to a few files:
+```
+$  ls img-dir/
 
+```
 The `--tcp-established` option is a must, since client have active TCP connection and we should explicitly inform crtools about it.
 
 ## Then restore the client
