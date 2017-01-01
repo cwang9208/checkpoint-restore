@@ -1,5 +1,16 @@
+# install CRIU
+
+## Building CRIU From Source
+### Native Compilation
+Simply run `make` in the CRIU source directory.
+
+## Installation
+CRIU works perfectly even when run from the sources directory (with the "./criu" command), but if you want to have in standard paths run `make install`.
+
+## Checking That It Works
+First thing to do is to run `criu check`. At the end it should say "Looks OK", if it doesn't the messages on the screen explain what functionality is missing.
+
 # Simple TCP pair
-This page describes step-by-step how to play with TCP dumping and restoring.
 
 ## Compile and run simple TCP client and server
 The below program is a simple echo server and a client, that pings server with increasing numbers once a second. In this howto we will dump and restore the client part.
