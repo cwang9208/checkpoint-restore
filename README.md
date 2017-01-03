@@ -1,16 +1,27 @@
-# install CRIU
+# Install CRIU
+## Dependencies
+
+### Protocol Buffers
+#### Distribution Packages
+The easiest way is to install distribution packages.
+- Ubuntu
+ -  sudo apt-get install --no-install-recommends git build-essential libprotobuf-dev libprotobuf-c0-dev protobuf-c-compiler protobuf-compiler python-protobuf libnl-3-dev libpth-dev pkg-config libcap-dev asciidoc libnet
 
 ## Building CRIU From Source
 ### Native Compilation
 Simply run `make` in the CRIU source directory.
 
 ## Installation
-CRIU works perfectly even when run from the sources directory (with the "./criu" command), but if you want to have in standard paths run `make install`.
+CRIU works perfectly even when run from the sources directory (with the "./criu" command), but if you want to have in standard paths run `make install`.  
+You may need to install the following packages to generate docs in Debian-based OS's to avoid errors from install-man: 
+- `asciidoc`
+- `xmlto`
 
 ## Checking That It Works
 First thing to do is to run `criu check`. At the end it should say "Looks OK", if it doesn't the messages on the screen explain what functionality is missing.
 
 # Simple TCP pair
+The `TCP_REPAIR` socket option was added to the kernel 3.5 to help with C/R for TCP sockets. 
 
 ## Compile and run simple TCP client and server
 The below program is a simple echo server and a client, that pings server with increasing numbers once a second. In this howto we will dump and restore the client part.
@@ -187,13 +198,20 @@ On another terminal (for better output readability) run the client:
 ## Try to dump the client
 Create a directory for images (`img-dir/` below) and dump the client
 ```
-# crtools dump --tree <tcp-howto-client-pid> --images-dir img-dir/ -v 4 -o dump.log --shell-job --tcp-established
+# sudo criu dump --tree <tcp-howto-client-pid> --images-dir img-dir/ -v 4 -o dump.log --shell-job --tcp-established
 ```
 The state of the process(es) is saved to a few files:
 ```
 $  ls img-dir/
-
+core-15976.img  inetsk.img         pstree.img           tty.img
+dump.log        inventory.img      reg-files.img        tty-info.img
+fdinfo-2.img    mm-15976.img       sigacts-15976.img
+fs-15976.img    pagemap-15976.img  stats-dump
+ids-15976.img   pages-1.img        tcp-stream-acca.img
 ```
 The `--tcp-established` option is a must, since client have active TCP connection and we should explicitly inform crtools about it.
 
 ## Then restore the client
+```
+# sudo criu restore --images-dir img-dir/ -v 4 -o rst.log --shell-job --tcp-established
+```
