@@ -274,14 +274,10 @@ Then, you are free to install gcc, criu, and other packages in this container.
 Add your own username into the lxc without asking password anymore.
 
 For example:
-
-Generate a private/public key pair, put it into your ~/.ssh/.
-
-Rename the private key to be ~/.ssh/lxc_priv_key
-
-Append the public key to the u1 container's ~/.ssh/auth..._keys
-
-Then
+- Generate a private/public key pair, put it into your ~/.ssh/.
+- Rename the private key to be ~/.ssh/lxc_priv_key
+- Append the public key to the u1 container's ~/.ssh/auth..._keys
+- Then
 ```
 ssh your_user_name@10.0.3.111 -i ~/.ssh/lxc_priv_key
 
