@@ -241,6 +241,9 @@ sudo lxc-stop -n u1
 Config u1 fstab to share memory between host OS and container.
 ```
 sudo echo "/dev/shm dev/shm none bind,create=dir" > /var/lib/lxc/u1/fstab
+
+The first field describes the block special device or remote filesystem to be mounted.
+The second field describes the mount point for the filesystem.
 ```
 
 Append these lines to `/var/lib/lxc/u1/config`
