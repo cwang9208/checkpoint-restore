@@ -62,6 +62,9 @@ PID=$(sudo lxc-info -n $1 | grep PID | awk '{ print $2 }')
 sudo cp container_setup /proc/$PID/root/home/ubuntu
 
 # execute script
+# lxc-attach -n name [-- COMMAND]
+# Runs the specified command inside the container specified by name.
+# The container has to be running already.
 sudo lxc-attach -n $1 /home/ubuntu/container_setup
 
 # stop container

@@ -21,6 +21,11 @@
 
 # this script is used in the container for setup
 
+# sudo
+# -S, --stdin
+#        read password from standard input.
+# The default user has password 'ubuntu'.
+
 echo "ubuntu" | sudo -S apt-get update
 sleep 1
 sudo apt-get -y install gcc g++ wget make cmake automake perl libevent-dev libtool libncurses5-dev

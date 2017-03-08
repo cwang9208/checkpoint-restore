@@ -42,6 +42,9 @@ sleep 12
 # make directory and pass the script to the container
 PID=$(sudo lxc-info -n $1 | grep PID | awk '{ print $2 }')
 
+# mkdir [OPTION]... DIRECTORY...
+# -p, --parents
+#        no error if existing, make parent directories as needed
 if [ ! -d /proc/$PID/root/home/ubuntu/apps/apache ]; then
   sudo mkdir /proc/$PID/root/home/ubuntu/apps/apache
 fi

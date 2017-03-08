@@ -1,8 +1,9 @@
 Linux Container LXC Folder
 
+Ubuntu 14.04 (64-bit)
 
 0. prerequisite
-$ sudo apt-get install libcap-dev automake bridge-utils debootstrap
+$ sudo apt-get install libcap-dev automake bridge-utils debootstrap libvirt-bin
 
 
 1. install LXC at host system
