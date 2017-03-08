@@ -61,14 +61,60 @@ echo "basedir = $APP_DIR/install" >> my.cnf
 echo "datadir = $APP_DIR/install/data" >> my.cnf
 echo "port = 3366" >> my.cnf
 echo "socket = $APP_DIR/install/mysql.sock" >> my.cnf
+# Server SQL Modes
+# - NO_ENGINE_SUBSTITUTION:
+#   Control automatic substitution of the default storage engine when a statement such as CREATE TABLE or
+#   ALTER TABLE specifies a storage engine that is disabled or not compiled in.
+#
+#   Because storage engines can be pluggable at runtime, unavailable engines are treated the same way:
+#   With NO_ENGINE_SUBSTITUTION enabled, an error occurs and the table is not created or altered if the
+#   desired engine is unavailable.
+#
+# - STRICT_TRANS_TABLES
+#   trict mode controls how MySQL handles invalid or missing values in data-change statements such as INSERT
+#   or UPDATE. A value can be invalid for several reasons. For example, it might have the wrong data type for
+#   the column, or it might be out of range.
+#
+#   For transactional tables, an error occurs for invalid or missing values in a data-change statement when
+#   STRICT_TRANS_TABLES is enabled. The statement is aborted and rolled back.
+
+# Alternative Storage Engines
+# Storage engines are MySQL components that handle the SQL operations for different table types.
+# MySQL Server uses a pluggable storage engine architecture that enables storage engines to be loaded into
+# and unloaded from a running MySQL server.
+# - InnoDB
+#   The default storage engine in MySQL. InnoDB is a transaction-safe (ACID compliant) storage engine for
+#   MySQL that has commit, rollback, and crash-recovery capabilities to protect user data. InnoDB row-level
+#   locking (without escalation to coarser granularity locks) and Oracle-style consistent nonlocking reads
+#   increase multi-user concurrency and performance. To maintain data integrity, InnoDB also supports FOREIGN
+#   KEY referential-integrity constraints.
+#
+# - MyISAM
+#   These tables have a small footprint. Table-level locking limits the performance in read/write workloads,
+#   so it is often used in read-only or read-mostly workloads in Web and data warehousing configurations.
+#   No foreign key support.
 echo "sql_mode = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES" >> my.cnf
 echo >> my.cnf
 
 
+# mysql_install_db initializes the MySQL data directory and creates the system tables that it contains, if
+# they do not exist (e.g., grant system tables).
+# mysql_install_db creates a default option file named my.cnf in the base installation directory. If my.cnf
+# already exists, mysql_install_db assumes it to be in use and writes a new file named my-new.cnf instead.
+
 # configure mysql install
+# --basedir=dir_name
+#        The path to the MySQL installation directory.
 scripts/mysql_install_db --basedir=$APP_DIR/install --datadir=$APP_DIR/install/data --defaults-file=$APP_DIR/install/my.cnf
 rm my-new.cnf
 
+# In MySQL, the TIMESTAMP data type differs in nonstandard ways from other data types:
+# TIMESTAMP columns not explicitly declared with the NULL attribute are assigned the NOT NULL attribute. (Columns
+# of other data types, if not explicitly declared as NOT NULL, permit NULL values.) Setting such a column to
+# NULL sets it to the current timestamp.
+# With this variable enabled, the server handles TIMESTAMP as follows instead:
+# TIMESTAMP columns not explicitly declared as NOT NULL permit NULL values. Setting such a column to NULL sets
+# it to NULL, not the current timestamp.
 
 # start server, wait till socket is there
 bin/mysqld --defaults-file=$APP_DIR/install/my.cnf --basedir=$APP_DIR/install --datadir=$APP_DIR/install/data --log-error=$APP_DIR/install/data/mysql.err --pid-file=$APP_DIR/mysql.pid --socket=$APP_DIR/install/mysql.sock --port=3366 --explicit_defaults_for_timestamp=TRUE &
@@ -80,8 +126,14 @@ sleep 5
 
 # set root user and create dbtest
 bin/mysqladmin -u root password 'password' --socket=$APP_DIR/install/mysql.sock
+# mysql is one of the client programs. It's a simple SQL shell with input line editing capabilities.
+# -e, --execute=name
+#        Execute command and quit.
 bin/mysql --defaults-file=$APP_DIR/install/my.cnf --socket=$APP_DIR/install/mysql.sock -uroot -ppassword -e "CREATE DATABASE dbtest;"
 
+# mysqladmin [OPTIONS] command command....
+# mysqladmin is a client for performing administrative operations. You can use it to check the server's configuration
+# and current status, to create and drop databases, and more.
 
 # shutdown server
 bin/mysqladmin --user=root --password=password --socket=$APP_DIR/install/mysql.sock shutdown
