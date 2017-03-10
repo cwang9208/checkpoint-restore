@@ -1,0 +1,35 @@
+Linux Container LXC Folder
+
+
+0. prerequisite
+$ sudo apt-get install libcap-dev automake bridge-utils debootstrap
+
+
+1. install LXC at host system
+$ ./mk_lxc
+
+
+2. build container
+To build a single one:
+$ ./mk_container <container name>
+To batch build containers name test1 to testn:
+$ ./batch_mk_container <number of instances>
+
+
+3. build an app: see individual app folder
+
+
+4. remove a container
+If the container is still running:
+$ sudo lxc-stop -n <name>
+Then:
+$ sudo lxc-destroy -n <name>
+
+
+5. uninstall LXC at host system
+$ cd lxc-1.0.6
+$ sudo make uninstall
+
+
+Note: all container_* scripts are used to be executed inside the container, do not execute in host.
+
