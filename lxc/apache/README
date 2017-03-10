@@ -8,11 +8,5 @@ $ ./start_apache <container name>
 Test apache with ab:
 $ ./test_apache <container name>
 
-2. batch testing
-This will install apache on test1 to testn:
-$ ./batch_mk_apache <numbere of instance>
-This will start-test-stop apache on test1 to testn:
-$ ./batch_test_apache <number of instance>
-
 Note: all container_* scripts are used to be executed inside the container, do not execute in host.
 

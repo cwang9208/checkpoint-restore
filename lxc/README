@@ -12,8 +12,6 @@ $ ./mk_lxc
 2. build container
 To build a single one:
 $ ./mk_container <container name>
-To batch build containers name test1 to testn:
-$ ./batch_mk_container <number of instances>
 
 
 3. build an app: see individual app folder
