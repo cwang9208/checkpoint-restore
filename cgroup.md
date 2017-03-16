@@ -7,7 +7,7 @@ To develop a mechanism to provide find-grained resource control on a process/set
 - A Cgroup refers to a resource controller for a certain type of CPU resource. e.g., Memory Cgroup, Network Cgroup etc.
 - A process group attaches itself to a single node present on each the hierarchies mounted on a system.
 
-![Cgroups Implementation, Hierarchies and Kernel Data Structures](images/cgroup_illustration)
+![Cgroups Implementation, Hierarchies and Kernel Data Structures](images/cgroup_illustration.png)
 
 ### Implementation
 There are data structures introduced to incorporate Cgroups.
