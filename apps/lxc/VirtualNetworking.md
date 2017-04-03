@@ -36,7 +36,7 @@ By default, guests that are connected via a virtual network with NAT forwarding 
 
 If you would like to make a service that is on a guest behind a NATed virtual network publicly available, you can install the necessary iptables rules to forward incoming connections to the host on any given port HP to port GP on the guest GNAME:
 
-1) Determine a) the name of the guest "G" (as defined in the libvirt domain XML), b) the IP address of the guest "I", c) the port on the guest that will receive the connections "GP", and d) the port on the host that will be forwarded to the guest "HP".
+1\) Determine a) the name of the guest "G" (as defined in the libvirt domain XML), b) the IP address of the guest "I", c) the port on the guest that will receive the connections "GP", and d) the port on the host that will be forwarded to the guest "HP".
 
 Use the basic script below (port mappings)
 ```
