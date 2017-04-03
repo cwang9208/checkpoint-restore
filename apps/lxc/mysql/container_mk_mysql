@@ -130,6 +130,8 @@ bin/mysqladmin -u root password 'password' --socket=$APP_DIR/install/mysql.sock
 # -e, --execute=name
 #        Execute command and quit.
 bin/mysql --defaults-file=$APP_DIR/install/my.cnf --socket=$APP_DIR/install/mysql.sock -uroot -ppassword -e "CREATE DATABASE dbtest;"
+# multiple SQL statements may be passed: 
+# bin/mysql --defaults-file=$APP_DIR/install/my.cnf --socket=$APP_DIR/install/mysql.sock -uroot -ppassword -e "SELECT VERSION();SELECT NOW()"
 
 # mysqladmin [OPTIONS] command command....
 # mysqladmin is a client for performing administrative operations. You can use it to check the server's configuration
