@@ -42,20 +42,13 @@ Use the basic script below (port mappings)
 ```
 #!/bin/bash
 
-# IMPORTANT: Change the "VM NAME" string to match your actual VM Name.
-# In order to create rules to other VMs, just duplicate the below block and configure
-# it accordingly.
-if [ "${1}" = "VM NAME" ]; then
+# Update the following variables to fit your setup
+GUEST_IP=
+GUEST_PORT=
+HOST_PORT=
 
-   # Update the following variables to fit your setup
-   GUEST_IP=
-   GUEST_PORT=
-   HOST_PORT=
-
-   iptables -I FORWARD -p tcp -d  $GUEST_IP -j ACCEPT
-   iptables -t nat -I PREROUTING -p tcp --dport $HOST_PORT -j DNAT --to $GUEST_IP:$GUEST_PORT
-
-fi
+iptables -I FORWARD -p tcp -d  $GUEST_IP -j ACCEPT
+iptables -t nat -I PREROUTING -p tcp --dport $HOST_PORT -j DNAT --to $GUEST_IP:$GUEST_PORT
 ```
 ## Bridged networking
 网桥(bridge)模式可以让客户机和宿主机共享一个物理网络设备连接，客户机有自己的独立IP地址，可以直接连接与宿主机一模一样的网络，客户机可以访问外部网络，外部网络也可以直接访问客户机（就像普通物理主机一样）。
