@@ -21,9 +21,6 @@
 
 # this script is used in the container for setup
 
-# sudo
-# -S, --stdin
-#        read password from standard input.
 # The default user has password 'ubuntu'.
 
 echo "ubuntu" | sudo -S apt-get update
